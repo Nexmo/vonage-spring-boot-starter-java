@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.nexmo</groupId>
+    <artifactId>vonage-starter</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <name>vonage-starter</name>
+    <description>Top level project for Vonage Spring Boot Starter.</description>
+    <url>https://github.com/nexmo/vonage-spring-boot-starter-java</url>
+    <scm>
+        <connection>scm:git:git@github.com:Nexmo/vonage-spring-boot-starter-java</connection>
+        <developerConnection>scm:git:git@github.com:Nexmo/vonage-spring-boot-starter-java</developerConnection>
+        <url>https://github.com/Nexmo/vonage-spring-boot-starter-java</url>
+    </scm>
+    <licenses>
+        <license>
+            <name>MIT</name>
+            <url>https://raw.githubusercontent.com/Nexmo/vonage-spring-boot-starter-java/master/LICENSE</url>
+        </license>
+    </licenses>
+    <organization>
+        <name>Nexmo</name>
+        <url>https://developer.nexmo.com/tools</url>
+    </organization>
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/Nexmo/vonage-spring-boot-starter-java/issues</url>
+    </issueManagement>
+    <developers>
+        <developer>
+            <id>devrel</id>
+            <name>Nexmo Developer Relations Team</name>
+            <email>devrel@nexmo.com</email>
+        </developer>
+    </developers>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.4.RELEASE</version>
+    </parent>
+
+    <modules>
+        <module>vonage-spring-boot-autoconfigure</module>
+        <module>vonage-spring-boot-starter</module>
+        <module>vonage-spring-boot-test-application</module>
+    </modules>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>nexus-releases</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>jcenter</id>
+            <name>JCenter</name>
+            <url>https://jcenter.bintray.com/</url>
+        </pluginRepository>
+    </pluginRepositories>
+    <profiles>
+        <profile>
+            <id>release-sign-artifacts</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                                <configuration>
+                                    <gpgArguments>
+                                        <arg>--pinentry-mode</arg>
+                                        <arg>loopback</arg>
+                                    </gpgArguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <!-- Maven Central Requires a JavaDoc Jar but this is unnecessary for Kotlin -->
+                        <!-- See: https://vzurczak.wordpress.com/2014/08/01/generate-an-empty-javadoc-jar-file/ -->
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>empty-javadoc-jar</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                                <configuration>
+                                    <classifier>javadoc</classifier>
+                                    <classesDirectory>${basedir}/javadoc</classesDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    <properties>
+        <java.version>1.8</java.version>
+        <nexmo.version>4.4.0</nexmo.version>
+        <spring-boot.version>2.1.4.RELEASE</spring-boot.version>
+    </properties>
+</project>

@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.nexmo</groupId>
+        <artifactId>vonage-starter</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>vonage-spring-boot-autoconfigure</artifactId>
+    <version>1.0.0</version>
+    <name>vonage-spring-boot-autoconfigure</name>
+    <description>Spring Boot Auto Configuration for Vonage</description>
+    <url>https://github.com/nexmo/vonage-spring-boot-starter-java</url>
+    <scm>
+        <connection>scm:git:git@github.com:Nexmo/vonage-spring-boot-starter-java</connection>
+        <developerConnection>scm:git:git@github.com:Nexmo/vonage-spring-boot-starter-java</developerConnection>
+        <url>https://github.com/Nexmo/vonage-spring-boot-starter-java</url>
+    </scm>
+    <licenses>
+        <license>
+            <name>MIT</name>
+            <url>https://raw.githubusercontent.com/Nexmo/vonage-spring-boot-starter-java/master/LICENSE</url>
+        </license>
+    </licenses>
+    <organization>
+        <name>Nexmo</name>
+        <url>https://developer.nexmo.com/tools</url>
+    </organization>
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/Nexmo/vonage-spring-boot-starter-java/issues</url>
+    </issueManagement>
+    <developers>
+        <developer>
+            <id>devrel</id>
+            <name>Nexmo Developer Relations Team</name>
+            <email>devrel@nexmo.com</email>
+        </developer>
+    </developers>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot</artifactId>
+            <version>${spring-boot.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+            <version>${spring-boot.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <version>${spring-boot.version}</version>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>com.nexmo</groupId>
+            <artifactId>client</artifactId>
+            <version>${nexmo.version}</version>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.12.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.4</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <properties>
+        <maven.deploy.skip>false</maven.deploy.skip>
+    </properties>
+</project>
