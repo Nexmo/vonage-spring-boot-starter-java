@@ -40,7 +40,7 @@ For Maven:
 
 ## Usage
 
-The Nexmo Spring Boot Starter will automatically configure instances of the `NexmoClient.Builder`, `NexmoClient`, and any of the other sub-clients (`AccountClient`, `VoiceClient`, etc..) once you have provided the required configuration values.
+The Nexmo Spring Boot Starter will automatically configure instances of the `NexmoClient.Builder`, `NexmoClient`, and any of the other sub-clients (`AccountClient`, `VoiceClient`, etc..) once you provid the required configuration values.
 
 * For help understanding our APIs, check out our [developer portal](https://developer.nexmo.com/).
 * There are also **many useful code samples** in our [vonage/nexmo-java-code-snippets](https://github.com/Nexmo/nexmo-java-code-snippets) repository.
