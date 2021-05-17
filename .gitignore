@@ -1,7 +1,6 @@
 HELP.md
 .gradle
 build/
-!gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
 
@@ -22,7 +21,7 @@ application.properties
 ### IntelliJ IDEA ###
 .idea
 *.iws
-*.iml
+*.im
 *.ipr
 out/
 !**/src/main/**/out/
