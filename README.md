@@ -1,2 +1,134 @@
-# vonage-spring-boot-starter-java
-Spring Boot Starter for Vonage
+# vonage Spring Boot Starter
+
+[![Maven Central](https://img.shields.io/maven-central/v/com.nexmo/nexmo-spring-boot-starter.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.nexmo%22%20AND%20a:%22nexmo-spring-boot-starter%22)
+[![Build Status](https://travis-ci.org/Nexmo/nexmo-spring-boot-starter.svg?branch=master)](https://travis-ci.org/Nexmo/nexmo-spring-boot-starter)
+[![codecov](https://codecov.io/gh/Nexmo/nexmo-spring-boot-starter/branch/master/graph/badge.svg)](https://codecov.io/gh/Nexmo/nexmo-spring-boot-starter)
+
+<img src="https://developer.nexmo.com/assets/images/Vonage_Nexmo.svg" height="48px" alt="Nexmo is now known as Vonage" />
+
+This Spring Boot Starter has been provided to help with integrating the [Nexmo Java SDK](https://github.com/Nexmo/Nexmo-java) into your [Spring Boot](https://spring.io/projects/spring-boot) project.
+
+ * [Installation](#installation)
+ * [Usage](#usage)
+ * [Customizing the VonageClient](#customizing-the-vonageclient)
+ * [Customize vonage Client Version](#customize-vonage-client-version)
+ 
+## Installation
+
+For Gradle:
+
+```groovy
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.vonage:vonage-spring-boot-starter:1.1.0'
+}
+```
+
+For Maven:
+
+```xml
+<dependency>
+  <groupId>com.vonage</groupId>
+  <artifactId>vonage-spring-boot-starter</artifactId>
+  <version>1.1.0</version>
+</dependency>
+```
+
+## Usage
+
+The Vonage Spring Boot Starter will automatically configure instances of the `VonageClient.Builder`, `VonageClient`, and any of the other sub-clients (`AccountClient`, `VoiceClient`, etc..) once you have provided the required configuration values.
+
+* For help understanding our APIs, check out our [developer portal](https://developer.vonage.com/).
+* There are also **many useful code samples** in our [Vonage/vonage-java-code-snippets](https://github.com/vonage/vonage-java-code-snippets) repository.
+
+### Configuration
+
+The following configuration values are used to configure the starter. Check out the [Application Property Files](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-external-config-application-property-files) and [Externalized Configuration](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-external-config) reference in the Spring Boot documentation for how to provide configuration values.
+
+#### API Key and Secret Configuration
+
+```
+vonage.creds.api-key=your-api-key
+vonage.creds.secret=your-api-secret
+```
+
+This will give you access to automatically wire in the `VonageClient`, `AccountClient`, `ApplicationClient`, `ConversionClient`, `InsightClient`, `NumbersClient`, `RedactClient`, `SmsClient`, `SnsClient`, and `VerifyClient`.
+
+You can also provide a signature secret:
+
+```
+vonage.creds.api-key=your-api-key
+vonage.creds.signature=signature
+```
+
+#### Application ID and Private Key Configuration
+To gain access to the `VoiceClient` you will need to provide a [Vonage Application ID]() and location or contents of a private key file associated with the Vonage Application.
+
+Here is an example providing the path to the key:
+```
+vonage.creds.application-id=application-id
+vonage.creds.private-key-path=/path/to/your/private.key
+```
+
+Here is an example providing the contents of the key:
+```
+vonage.creds.application-id=application-id
+vonage.creds.private-key-contents=contents-of-the-key
+```
+
+### Customizing the `VonageClient`
+
+By default, the auto configuration will create a `VonageClient.Builder` using the information provided in your `application.properties`, `application.yml`, or other external configuration source. However, when registering the `VonageClient` and all of the other sub-clients, the auto configuration can opt to use a pre-registered `VonageClient.Builder`.
+
+For example, if you would like to customize the base URI that the library uses, you can register a custom version of the `VonageClient.Builder` in your configuration class:
+
+```java
+@Autowired
+VonageCredentialsProperties vonageCredentialsProperties;
+
+@Bean
+public VonageClient.Builder customvonageBuilder() {
+    return VonageClient.builder()
+            .apiKey(vonageCredentialsProperties.getApiKey())
+            .apiSecret(vonageCredentialsProperties.getSecret())
+            .httpConfig(HttpConfig.builder().baseUri("https://example.com").build());
+}
+```
+> Note that you must include your credentials as shown in this example. This builder completely replaces the automatically configured one.
+
+## Customize vonage Client Version
+
+By default, the Vonage Spring Boot Starter will transitively define Vonage Client to the latest version at its release. You can override this by adding a dependency on the Vonage Client, bringing in `4.2.0` for example:
+
+For Gradle:
+
+```groovy
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.vonage:client:4.2.0'
+}
+```
+
+For Maven:
+
+```xml
+<dependency>
+  <groupId>com.vonage</groupId>
+  <artifactId>client</artifactId>
+  <version>4.2.0</version>
+</dependency>
+```
+
+Bringing in older versions of the supported Vonage Client, may result in some unforseen consequences and build errors. As a result here is a list of each version targeted by each version of the starter:
+
+| Vonage Spring Boot Starter | Vonage Java Client |
+|---|---|
+| v1.0.0 | v4.3.0 |
+| v1.0.1 | v4.3.1 |
+| v1.1.0 | v4.4.0 |
